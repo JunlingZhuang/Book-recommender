@@ -196,7 +196,7 @@ export default function Home() {
               )}
             </div>
             <Button
-              className="bg-black text-white w-full rounded-none hover:bg-neutral-600 hover:text-white"
+              className="bg-black text-white w-full rounded-none hover:bg-neutral-100 hover:text-black"
               disabled={isLoading}
               type="submit"
               variant="outline"
@@ -235,9 +235,9 @@ export default function Home() {
                               key={book.isbn10 || book.isbn13}
                               className="w-full md:w-1/3 px-2 mb-4 animate-pop-in"
                             >
-                              <div className="bg-neutral-100 p-6 flex items-center flex-col">
-                                <div className="flex justify-between w-full">
-                                  <h3 className="text-xl font-semibold mb-4 line-clamp-1">
+                              <div className="bg-neutral-950 border-solid border border-neutral-200 hover:shadow-lg hover:shadow-white p-6 flex items-center flex-col">
+                                <div className="w-full text-center">
+                                  <h3 className="text-xl text-neutral-300 font-normal mb-4 line-clamp-1 text-center">
                                     {book.title}
                                   </h3>
                                   {process.env.NEXT_PUBLIC_COHERE_CONFIGURED &&
@@ -245,7 +245,7 @@ export default function Home() {
                                       "connection to Cohere API failed with status: 429" && (
                                       <Popover>
                                         <PopoverTrigger asChild>
-                                          <Button className="rounded-full p-2 bg-black cursor-pointer w-10 h-10">
+                                          <Button className="rounded-full border-solid border border-neutral-300 p-2 bg-black cursor-pointer w-10 h-10">
                                             ✨
                                           </Button>
                                         </PopoverTrigger>
@@ -270,15 +270,15 @@ export default function Home() {
                                   <img
                                     src={book.thumbnail}
                                     alt={"Thumbnail of the book " + book.title}
-                                    className="w-full h-full rounded-lg shadow-lg"
+                                    className="w-full h-full rounded-none shadow-lg"
                                   />
                                 </div>
-                                <p className="mt-4 text-gray-500 line-clamp-1">
+                                <p className="mt-4 text-neutral-100 line-clamp-1 mb-4">
                                   {book.authors}
                                 </p>
                                 <div className="flex">
                                   <Button
-                                    className="bg-black text-white w-full rounded-md hover:bg-gray-700 hover:text-white"
+                                    className="bg-black text-white w-full rounded-none hover:bg-neutral-100 hover:text-black"
                                     type="submit"
                                     variant="outline"
                                     onClick={() => {
