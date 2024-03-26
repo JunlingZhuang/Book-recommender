@@ -17,10 +17,14 @@ const customStyles = {
     right: "auto",
     bottom: "auto",
     marginRight: "-50%",
-    width: "90%",
+    width: "70%",
     height: "80%",
     transform: "translate(-50%, -50%)",
     borderRadius: "5px",
+    backgroundColor: "black",
+  },
+  overlay: {
+    backgroundColor: "rgba(0, 0, 0, 0.85)",
   },
 };
 export default function Home() {
@@ -87,12 +91,13 @@ export default function Home() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <div className="flex justify-between">
-          <h3 className="mt-2 text-lg font-semibold text-gray-700">
+        <div className="flex justify-between ">
+          <h3 className="mt-2 text-lg font-semibold text-neutral-100">
             {selectedBook?.title}
           </h3>
           <Button
-            className="hover:font-bold rounded hover:bg-gray-700 p-2 w-20 hover:text-white "
+            // className="bg-black text-white w-full rounded-none hover:bg-neutral-100 hover:text-black"
+            className="bg-black hover:font-bold border rounded hover:bg-gray-700 p-2 w-20 hover:bg-neutral-100 hover:text-black"
             onClick={closeModal}
           >
             Close
@@ -100,7 +105,7 @@ export default function Home() {
         </div>
         <div>
           <div className="flex justify-center py-10">
-            <div className="w-48 h-72">
+            <div className="w-48 h-72 ">
               <img
                 src={selectedBook?.thumbnail}
                 alt={"Thumbnail of the book " + selectedBook?.title}
@@ -108,8 +113,8 @@ export default function Home() {
               />
             </div>
           </div>
-          <div>
-            <p className="mt-1 text-gray-500">
+          <div className="text-neutral-100">
+            <p className="mt-1">
               <span className="font-bold">Authors</span>:{" "}
               {selectedBook?.authors}
             </p>
@@ -129,7 +134,7 @@ export default function Home() {
             <p>{selectedBook?.description}</p>
 
             <div className="flex justify-center">
-              <a
+              {/* <a
                 className="hover:animate-pulse"
                 target="_blank"
                 href={"https://www.amazon.com/s?k=" + selectedBook?.isbn10}
@@ -138,7 +143,18 @@ export default function Home() {
                   className="w-60"
                   src="https://kentuckynerd.com/wp-content/uploads/2019/05/amazon-buy-now-button.jpg"
                 />
-              </a>
+              </a> */}
+              <Button
+                className="bg-black mt-8 border text-white w-2/5 rounded-none hover:bg-neutral-100 hover:text-black"
+                onClick={() =>
+                  window.open(
+                    "https://www.amazon.com/s?k=" + selectedBook?.isbn10,
+                    "_blank"
+                  )
+                }
+              >
+                Buy on Amazon
+              </Button>
             </div>
           </div>
         </div>
