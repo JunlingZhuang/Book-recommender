@@ -236,10 +236,11 @@ export default function Home() {
                               className="w-full md:w-1/3 px-2 mb-4 animate-pop-in"
                             >
                               <div className="bg-neutral-950 border-solid border border-neutral-200 hover:shadow-lg hover:shadow-white p-6 flex items-center flex-col">
-                                <div className="w-full text-center">
+                                <div className="flex w-full justify-between">
                                   <h3 className="text-xl text-neutral-300 font-normal mb-4 line-clamp-1 text-center">
                                     {book.title}
                                   </h3>
+
                                   {process.env.NEXT_PUBLIC_COHERE_CONFIGURED &&
                                     book._additional.generate.error !=
                                       "connection to Cohere API failed with status: 429" && (
@@ -266,6 +267,7 @@ export default function Home() {
                                       </Popover>
                                     )}
                                 </div>
+
                                 <div className="w-48 h-72">
                                   <img
                                     src={book.thumbnail}
