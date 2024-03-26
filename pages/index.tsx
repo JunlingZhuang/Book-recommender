@@ -326,7 +326,7 @@ export default function Home() {
         <div>
           Deploy it on &nbsp;
           <a
-            href="https://vercel.com/junlingzhuangs-projects/book-recommender"
+            href="https://book-recommender-junling.vercel.app/"
             className="underline text-neutral-100"
           >
             Vercel
