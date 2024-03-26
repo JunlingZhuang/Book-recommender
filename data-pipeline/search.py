@@ -6,9 +6,13 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-WEAVIATE_CLUSTER_URL = os.getenv('WEAVIATE_CLUSTER_URL') or 'https://zxzyqcyksbw7ozpm5yowa.c0.us-west2.gcp.weaviate.cloud'
+WEAVIATE_CLUSTER_URL = os.getenv('WEAVIATE_CLUSTER_URL')
+# WEAVIATE_CLUSTER_URL = os.getenv('WEAVIATE_CLUSTER_URL') or 'https://zxzyqcyksbw7ozpm5yowa.c0.us-west2.gcp.weaviate.cloud'
 
-WEAVIATE_API_KEY = os.getenv('WEAVIATE_API_KEY') or 'n6mdfI32xrXF3DH76i8Pwc2IajzLZop2igb6'
+
+WEAVIATE_API_KEY = os.getenv('WEAVIATE_API_KEY') 
+# WEAVIATE_API_KEY = os.getenv('WEAVIATE_API_KEY') or 'n6mdfI32xrXF3DH76i8Pwc2IajzLZop2igb6'
+
 print("theWEAVIATE_API_KEY is ",WEAVIATE_API_KEY)
 
 OPENAI_API_KEY = os.getenv('OPENAI_API_KEY')
