@@ -326,14 +326,14 @@ export default function Home() {
         <div>
           Deploy it on &nbsp;
           <a
-            href="https://vercel.com/templates/next.js/weaviate-bookrecs"
+            href="https://vercel.com/junlingzhuangs-projects/book-recommender"
             className="underline text-neutral-100"
           >
             Vercel
           </a>{" "}
           and checkout the code on{" "}
           <a
-            href="https://github.com/weaviate/BookRecs/"
+            href="https://github.com/JunlingZhuang/Book-recommender"
             className="underline text-neutral-100"
           >
             Github
