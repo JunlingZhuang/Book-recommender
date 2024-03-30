@@ -41,7 +41,7 @@ export default function Home() {
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        "Get personalized book recommendations based on your interests and hobbies.📚",
+        "Get personalized book recommendations based on your interests and hobbies!📚",
         "Try it out now!💡 ",
       ],
       typeSpeed: 50,
