@@ -1,9 +1,11 @@
-import { SyntheticEvent, useState, useEffect } from "react";
+import { SyntheticEvent, useState, useEffect, useRef } from "react";
 import CircleLoader from "react-spinners/CircleLoader";
 import Modal from "react-modal";
 import { Book } from "types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import Typed from "typed.js";
+
 import {
   Popover,
   PopoverContent,
@@ -35,6 +37,26 @@ export default function Home() {
   const [recommendedBooks, setRecommendedBooks] = useState([]);
   const [modalIsOpen, setIsOpen] = useState(false);
   const [selectedBook, setSelectedbook] = useState<Book | undefined>(undefined);
+  const el = useRef(null);
+  useEffect(() => {
+    const typed = new Typed(el.current, {
+      strings: [
+        "Get personalized book recommendations based on your interests and hobbies.📚",
+        "Try it out now!💡 ",
+      ],
+      typeSpeed: 50,
+      backSpeed: 20,
+      backDelay: 1000,
+
+      showCursor: true,
+      cursorChar: "_",
+      loop: true,
+    });
+
+    return () => {
+      typed.destroy();
+    };
+  }, []);
 
   const openModal = (book_title: string) => {
     const bookSelection = recommendedBooks.filter((book: Book) => {
@@ -164,6 +186,9 @@ export default function Home() {
           <h1 className="text-3xl text-white font-black font-normal mb-6 text-center">
             Book Recommendations
           </h1>
+          <h2 className="text-2xl text-white font-normal text-center">
+            <span ref={el}></span>
+          </h2>
           <div className="border-t border-gray-200 my-4"></div>
 
           <form

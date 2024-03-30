@@ -23,6 +23,7 @@
     "react-spinners": "^0.13.8",
     "tailwind-merge": "^1.14.0",
     "tailwindcss-animate": "^1.0.7",
+    "typed.js": "^2.1.0",
     "weaviate-ts-client": "^1.5.0"
   },
   "devDependencies": {
