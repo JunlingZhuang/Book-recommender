@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
+import { Texture, MeshBasicMaterial, Mesh } from "three";
 
 // 定义Props类型
 interface Book3DProps {
