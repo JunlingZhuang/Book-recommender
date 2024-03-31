@@ -1,16 +1,21 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
-const Book3D = ({ thumbnail }) => {
-  const mountRef = useRef(null);
+// 定义Props类型
+interface Book3DProps {
+  thumbnail: string;
+}
 
-  // use proxy to bypass CORS
+const Book3D: React.FC<Book3DProps> = ({ thumbnail }) => {
+  const mountRef = useRef<HTMLDivElement>(null);
+
+  // 使用代理URL绕过CORS
   const proxyUrl = `/api/proxy/proxy?url=${encodeURIComponent(thumbnail)}`;
 
   useEffect(() => {
     if (!mountRef.current) return;
 
-    // get the width and height of the container
+    // 获取容器的宽度和高度
     const width = mountRef.current.clientWidth;
     const height = mountRef.current.clientHeight;
 
@@ -18,12 +23,14 @@ const Book3D = ({ thumbnail }) => {
     const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 1000);
     const renderer = new THREE.WebGLRenderer({ antialias: true });
 
-    // render according to the size of the container
+    // 根据容器的大小进行渲染
     renderer.setSize(width, height);
     mountRef.current.appendChild(renderer.domElement);
-    const scale = 0.5; // scale the book size
+
+    const scale = 0.5; // 缩放书本大小
     const geometry = new THREE.BoxGeometry(3 * scale, 4.5 * scale, 0.3 * scale);
     const textureLoader = new THREE.TextureLoader();
+
     textureLoader.load(proxyUrl, (texture) => {
       const material = new THREE.MeshBasicMaterial({ map: texture });
       const book = new THREE.Mesh(geometry, material);
@@ -44,8 +51,11 @@ const Book3D = ({ thumbnail }) => {
       if (mountRef.current && mountRef.current.contains(renderer.domElement)) {
         mountRef.current.removeChild(renderer.domElement);
       }
+      // 清理Three.js资源
+      renderer.dispose();
+      geometry.dispose();
     };
-  }, [proxyUrl]);
+  }, [proxyUrl]); // 当thumbnail变化时，重新运行useEffect
 
   return <div ref={mountRef} className="w-full h-full"></div>;
 };
