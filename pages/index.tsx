@@ -4,6 +4,7 @@ import Modal from "react-modal";
 import { Book } from "types";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Book3D } from "@/components/ui/book3d";
 import Typed from "typed.js";
 
 import {
@@ -30,6 +31,15 @@ const customStyles = {
   },
 };
 export default function Home() {
+  const [hoverStates, setHoverStates] = useState({});
+  // 定义事件处理函数以更新特定书籍的悬停状态
+  const handleMouseEnter = (isbn) => {
+    setHoverStates((prev) => ({ ...prev, [isbn]: true }));
+  };
+
+  const handleMouseLeave = (isbn) => {
+    setHoverStates((prev) => ({ ...prev, [isbn]: false }));
+  };
   const [isLoading, setIsLoading] = useState(false);
   const [loadedOnce, setLoadedOnce] = useState(false);
   const [query, setQuery] = useState("");
@@ -41,7 +51,7 @@ export default function Home() {
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        "Get personalized book recommendations based on your interests and hobbies.📚",
+        "Get personalized book recommendations based on your interests and hobbies!📚",
         "Try it out now!💡 ",
       ],
       typeSpeed: 50,
@@ -309,12 +319,24 @@ export default function Home() {
                                     )}
                                 </div>
 
-                                <div className="w-48 h-72">
-                                  <img
-                                    src={book.thumbnail}
-                                    alt={"Thumbnail of the book " + book.title}
-                                    className="w-full h-full rounded-none shadow-lg"
-                                  />
+                                <div
+                                  className="image-container w-48 h-72"
+                                  onMouseEnter={() =>
+                                    handleMouseEnter(book.isbn10 || book.isbn13)
+                                  }
+                                  onMouseLeave={() =>
+                                    handleMouseLeave(book.isbn10 || book.isbn13)
+                                  }
+                                >
+                                  {hoverStates[book.isbn10 || book.isbn13] ? (
+                                    <Book3D thumbnail={book.thumbnail} />
+                                  ) : (
+                                    <img
+                                      src={book.thumbnail}
+                                      alt={`Thumbnail of the book ${book.title}`}
+                                      className="w-full h-full rounded-none shadow-lg"
+                                    />
+                                  )}
                                 </div>
                                 <p className="mt-4 text-neutral-100 line-clamp-1 mb-4">
                                   {book.authors}

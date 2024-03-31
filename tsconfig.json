@@ -1,5 +1,7 @@
 {
   "compilerOptions": {
+    "noImplicitAny": false,
+    "typeRoots": ["node_modules/@types", "src/types"],
     "target": "es5",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
@@ -17,7 +19,6 @@
     "paths": {
       "types": ["./types.ts"],
       "@/*": ["./*"]
-
     }
   },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
