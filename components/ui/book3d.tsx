@@ -1,6 +1,5 @@
 import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
-import { Texture, MeshBasicMaterial, Mesh } from "three";
 
 interface Book3DProps {
   thumbnail: string;
@@ -19,13 +18,13 @@ const Book3D: React.FC<Book3DProps> = ({ thumbnail }) => {
 
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(30, width / height, 0.1, 1000);
-    const renderer = new THREE.WebGLRenderer({ antialias: true });
+    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 
-    
     renderer.setSize(width, height);
+    renderer.setClearAlpha(0);
     mountRef.current.appendChild(renderer.domElement);
 
-    const scale = 0.5; 
+    const scale = 0.5;
     const geometry = new THREE.BoxGeometry(3 * scale, 4.5 * scale, 0.3 * scale);
     const textureLoader = new THREE.TextureLoader();
 
@@ -52,7 +51,7 @@ const Book3D: React.FC<Book3DProps> = ({ thumbnail }) => {
       renderer.dispose();
       geometry.dispose();
     };
-  }, [proxyUrl]); 
+  }, [proxyUrl]);
 
   return <div ref={mountRef} className="w-full h-full"></div>;
 };
