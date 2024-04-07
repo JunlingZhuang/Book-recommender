@@ -115,7 +115,7 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-repeat bg-[url('../public/png/background_body.jpg')] flex flex-col justify-between">
+    <div className="min-h-screen bg-repeat bg-[url('../public/png/test_2.png')] flex flex-col justify-between bg-opacity-50 bg-blend-overlay">
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -217,7 +217,7 @@ export default function Home() {
                 id="favorite-books"
                 name="favorite-books"
                 placeholder="I'd like to learn..."
-                className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-600 bg-stone-900 text-neutral-300"
+                className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-600 bg-stone-900 text-neutral-300 focus:shadow-pink-100 hover:shadow-pink-100"
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -236,7 +236,7 @@ export default function Home() {
                     id="interests-input"
                     name="interests"
                     placeholder="Tell us about your hobbies and interests, comma separated..."
-                    className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-600 bg-stone-900 text-neutral-300"
+                    className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-600 bg-stone-900 text-neutral-300  focus:shadow-pink-100 hover:shadow-pink-100"
                     value={userInterests}
                     onChange={(e) => {
                       setUserInterests(e.target.value);
@@ -282,7 +282,7 @@ export default function Home() {
                               key={book.isbn10 || book.isbn13}
                               className="w-full md:w-1/3 px-2 mb-4 animate-pop-in"
                             >
-                              <div className="book-card  duration-150  hover:scale-105 bg-stone-900 rounded-lg border-solid border shadow-lg shadow-neutral-600 hover:shadow-lg hover:shadow-neutral-950 p-6 flex items-center flex-col">
+                              <div className="book-card  duration-150  hover:scale-105 bg-stone-900 rounded-lg border-solid border shadow-lg shadow-neutral-600 hover:shadow-lg hover:shadow-pink-100 p-6 flex items-center flex-col">
                                 <div className="flex w-full justify-between">
                                   <h3 className="text-xl text-neutral-300 font-normal mb-4 line-clamp-1 text-center">
                                     {book.title}
