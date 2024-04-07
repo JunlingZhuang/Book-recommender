@@ -259,7 +259,7 @@ export default function Home() {
           {isLoading ? (
             <div className="w-full flex justify-center h-60 pt-10">
               <CircleLoader
-                color={"#ffffff"}
+                color={"#000000"}
                 loading={isLoading}
                 size={100}
                 aria-label="Loading"
