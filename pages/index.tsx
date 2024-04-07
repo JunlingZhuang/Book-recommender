@@ -115,7 +115,8 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-repeat bg-[url('../public/png/test_2.png')] flex flex-col justify-between bg-opacity-50 bg-blend-overlay">
+    // <div className="min-h-screen bg-repeat bg-[url('../public/png/test_2.png')] flex flex-col justify-between bg-opacity-50 bg-blend-overlay">
+    <div className="min-h-screen bg-neutral-100 flex flex-col justify-between bg-opacity-50 bg-blend-overlay">
       <Modal
         isOpen={modalIsOpen}
         onRequestClose={closeModal}
@@ -127,7 +128,6 @@ export default function Home() {
             {selectedBook?.title}
           </h3>
           <Button
-            // className="bg-black text-white w-full rounded-none hover:bg-neutral-100 hover:text-black"
             className="bg-black hover:font-bold border rounded hover:bg-gray-700 p-2 w-20 hover:bg-neutral-100 hover:text-black"
             onClick={closeModal}
           >
@@ -192,13 +192,13 @@ export default function Home() {
       </Modal>
       <div className="mb-auto py-10 px-4 ">
         <div className="container mx-auto">
-          <h1 className="text-3xl text-white font-black font-normal mb-6 text-center">
+          <h1 className="text-3xl text-neutral-950 font-bold font-sans mb-6 text-center">
             Book Recommendations
           </h1>
-          <h2 className="text-2xl text-white font-normal text-center">
+          <h2 className="text-2xl text-neutral-950 font-normal text-center">
             <span ref={el}></span>
           </h2>
-          <div className="border-t border-gray-200 my-4"></div>
+          <div className="border-t border-gray-500 my-4"></div>
 
           <form
             id="recommendation-form"
@@ -208,7 +208,7 @@ export default function Home() {
             <div className="mb-4 w-full">
               <label
                 htmlFor="favorite-books"
-                className="block text-white font-normal mb-2 text-center"
+                className="block text-neutral-950 font-normal mb-2 text-center"
               >
                 What would you like to get a book recommendation on?
               </label>
@@ -217,7 +217,7 @@ export default function Home() {
                 id="favorite-books"
                 name="favorite-books"
                 placeholder="I'd like to learn..."
-                className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-600 bg-stone-900 text-neutral-300 focus:shadow-pink-100 hover:shadow-pink-100"
+                className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-400 bg-stone-900 text-neutral-300 focus:shadow-pink-100 hover:shadow-pink-200"
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
@@ -227,16 +227,16 @@ export default function Home() {
                 <>
                   <label
                     htmlFor="interests-input"
-                    className="block text-white font-normal mb-2 pt-4 text-center"
+                    className="block text-neutral-950 font-normal mb-2 pt-4 text-center"
                   >
-                    Your interests and hobbies
+                    Your interests and hobbies?
                   </label>
                   <Input
                     type="text"
                     id="interests-input"
                     name="interests"
                     placeholder="Tell us about your hobbies and interests, comma separated..."
-                    className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-600 bg-stone-900 text-neutral-300  focus:shadow-pink-100 hover:shadow-pink-100"
+                    className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-400 bg-stone-900 text-neutral-300 focus:shadow-pink-100 hover:shadow-pink-200"
                     value={userInterests}
                     onChange={(e) => {
                       setUserInterests(e.target.value);
@@ -246,7 +246,7 @@ export default function Home() {
               )}
             </div>
             <Button
-              className="bg-stone-900 text-neutral-300 w-full rounded-md hover:bg-neutral-100 hover:text-black opacity-80"
+              className=" bg-neutral-100 text-neutral-950 border border-neutral-300 w-full rounded-md hover:border-neutral-950 hover:bg-neutral-100"
               disabled={isLoading}
               type="submit"
               variant="outline"
@@ -254,6 +254,7 @@ export default function Home() {
               Get Recommendations
             </Button>
           </form>
+          <div className="border-t border-gray-500 my-4"></div>
 
           {isLoading ? (
             <div className="w-full flex justify-center h-60 pt-10">
@@ -370,14 +371,14 @@ export default function Home() {
           Deploy it on &nbsp;
           <a
             href="https://book-recommender-junling.vercel.app/"
-            className="underline text-neutral-100"
+            className="underline text-neutral-500"
           >
             Vercel
           </a>{" "}
           and checkout the code on{" "}
           <a
             href="https://github.com/JunlingZhuang/Book-recommender"
-            className="underline text-neutral-100"
+            className="underline text-neutral-500"
           >
             Github
           </a>
@@ -388,7 +389,7 @@ export default function Home() {
           <a
             href="https://junlings-superb-site111.webflow.io/"
             target="_blank"
-            className="underline text-neutral-100"
+            className="underline text-neutral-500"
           >
             @Junling Zhuang
           </a>{" "}
@@ -396,7 +397,7 @@ export default function Home() {
           <a
             target="_blank"
             href="https://weaviate.io/"
-            className="underline text-neutral-100"
+            className="underline text-neutral-500"
           >
             Weaviate
           </a>
