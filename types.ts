@@ -17,7 +17,6 @@ export interface Book {
 export interface NearTextType {
   concepts: [string] | [];
   distance?: number;
-  // moveAwayFrom?: object;
 }
 
 export interface AdditionalType {
@@ -27,4 +26,8 @@ export interface AdditionalType {
 export interface GenerateType {
   error: string;
   singleResult: string;
+}
+export interface CustomHeaders {
+  "X-OpenAI-Api-Key"?: string;
+  "X-Cohere-Api-Key"?: string;
 }

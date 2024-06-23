@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import weaviate, { WeaviateClient, ApiKey } from "weaviate-ts-client";
 import { NearTextType } from "types";
-
+import { CustomHeaders } from "types";
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<Object>
@@ -24,14 +24,16 @@ export default async function handler(
       return;
     }
 
+    const headers: CustomHeaders = {
+      "X-OpenAI-Api-Key": OPENAI_API_KEY,
+      "X-Cohere-Api-Key": COHERE_API_KEY,
+    };
+
     const client: WeaviateClient = weaviate.client({
       scheme: "https",
       host: WEAVIATE_CLUSTER_URL.replace("https://", ""),
       apiKey: new ApiKey(WEAVIATE_API_KEY),
-      headers: {
-        "X-OpenAI-Api-Key": OPENAI_API_KEY,
-        "X-Cohere-Api-Key": COHERE_API_KEY,
-      },
+      headers: headers as HeadersInit, // Type assertion if necessary
     });
 
     let nearText: NearTextType = {
@@ -61,8 +63,6 @@ export default async function handler(
     res.status(200).json(recData);
   } catch (err) {
     console.error("Error handling request:", err);
-    res
-      .status(500)
-      .json({ error: "Internal server error", details: err.message });
+    res.status(500).json({ error: "Internal server error" });
   }
 }
