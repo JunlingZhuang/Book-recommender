@@ -14,15 +14,14 @@ export interface Book {
   _additional: AdditionalType;
 }
 
-
 export interface NearTextType {
   concepts: [string] | [];
-  certainty?: number;
-  moveAwayFrom?: object;
+  distance?: number;
+  // moveAwayFrom?: object;
 }
 
 export interface AdditionalType {
-  generate: GenerateType
+  generate: GenerateType;
 }
 
 export interface GenerateType {

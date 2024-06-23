@@ -84,34 +84,52 @@ export default function Home() {
     e.preventDefault();
 
     // Check Inputs
-    if (query === "") {
+    if (query.trim() === "") {
       alert("Please let us know what you'd like to learn!");
       return;
     }
 
     setIsLoading(true);
 
-    await fetch("/api/recommendations", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        query,
-        userInterests,
-      }),
-    })
-      .then((res) => {
-        console.log(res);
-        if (res.ok) return res.json();
-      })
-      .then((recommendations) => {
-        console.log(recommendations.data.Get.Book);
-        setRecommendedBooks(recommendations.data.Get.Book);
+    try {
+      const response = await fetch("/api/recommendations", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          query,
+          userInterests,
+        }),
       });
 
-    setIsLoading(false);
-    setLoadedOnce(true);
+      console.log("Response:", response);
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok.");
+      }
+
+      const recommendations = await response.json();
+
+      console.log("Recommendations:", recommendations);
+
+      if (
+        recommendations &&
+        recommendations.data &&
+        recommendations.data.Get &&
+        recommendations.data.Get.Book
+      ) {
+        console.log("Books:", recommendations.data.Get.Book);
+        setRecommendedBooks(recommendations.data.Get.Book);
+      } else {
+        console.error("Unexpected response structure:", recommendations);
+      }
+    } catch (error) {
+      console.error("Error fetching recommendations:", error);
+    } finally {
+      setIsLoading(false);
+      setLoadedOnce(true);
+    }
   };
 
   return (
@@ -216,7 +234,7 @@ export default function Home() {
                 type="text"
                 id="favorite-books"
                 name="favorite-books"
-                placeholder="I'd like to learn..."
+                placeholder="I'd like to learn... (Enter keywords separated by commas or a whole sentence)"
                 className="block w-full px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-400 bg-stone-900 text-neutral-300 focus:shadow-pink-100 hover:shadow-pink-200"
                 value={query}
                 onChange={(e) => {
@@ -257,7 +275,7 @@ export default function Home() {
           <div className="border-t border-gray-500 my-4"></div>
 
           {isLoading ? (
-            <div className="w-full flex justify-center h-60 pt-10">
+            <div className="w-full flex items-center h-60 pt-10 flex-col ">
               <CircleLoader
                 color={"#000000"}
                 loading={isLoading}
@@ -265,6 +283,9 @@ export default function Home() {
                 aria-label="Loading"
                 data-testid="loader"
               />
+              <div>
+                Searching in the vector database wihch may takes up to 30s
+              </div>
             </div>
           ) : (
             <>
