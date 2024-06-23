@@ -50,7 +50,7 @@ export default async function handler(
     const myCollection = client.collections.get("Book");
 
     let result = await myCollection.query.nearText(nearText.concepts, {
-      limit: 2,
+      limit: 20,
       returnProperties: [
         "title",
         "isbn10",
