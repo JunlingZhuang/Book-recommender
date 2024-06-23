@@ -26,7 +26,7 @@
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.163.0",
     "typed.js": "^2.1.0",
-    "weaviate-ts-client": "^1.5.0"
+    "weaviate-client": "^3.0.7"
   },
   "devDependencies": {
     "@types/node": "^20.5.6",

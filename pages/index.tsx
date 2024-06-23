@@ -92,7 +92,7 @@ export default function Home() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/recommendations", {
+      const response = await fetch("/api/test", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -109,20 +109,14 @@ export default function Home() {
         throw new Error("Network response was not ok.");
       }
 
-      const recommendations = await response.json();
+      const { books } = await response.json();
+      console.log("Recommendations:", books);
 
-      console.log("Recommendations:", recommendations);
-
-      if (
-        recommendations &&
-        recommendations.data &&
-        recommendations.data.Get &&
-        recommendations.data.Get.Book
-      ) {
-        console.log("Books:", recommendations.data.Get.Book);
-        setRecommendedBooks(recommendations.data.Get.Book);
+      if (books) {
+        console.log("we found books!!!!!!!!!!!!!");
+        setRecommendedBooks(books.map((book) => book.properties));
       } else {
-        console.error("Unexpected response structure:", recommendations);
+        console.error("Unexpected response structure:", books);
       }
     } catch (error) {
       console.error("Error fetching recommendations:", error);
@@ -310,31 +304,31 @@ export default function Home() {
                                     {book.title}
                                   </h3>
 
-                                  {process.env.NEXT_PUBLIC_COHERE_CONFIGURED &&
+                                  {/* {process.env.NEXT_PUBLIC_COHERE_CONFIGURED &&
                                     book._additional.generate.error !=
-                                      "connection to Cohere API failed with status: 429" && (
-                                      <Popover>
-                                        <PopoverTrigger asChild>
-                                          <Button className="rounded-full border-solid border border-neutral-300 p-2 bg-black cursor-pointer w-10 h-10">
-                                            ✨
-                                          </Button>
-                                        </PopoverTrigger>
-                                        <PopoverContent className="w-80 h-80 overflow-auto">
-                                          <div>
-                                            <p className="text-2xl font-bold">
-                                              Why you&apos;ll like this book:
-                                            </p>
-                                            <br />
-                                            <p>
+                                      "connection to Cohere API failed with status: 429" && ( */}
+                                  <Popover>
+                                    <PopoverTrigger asChild>
+                                      <Button className="rounded-full border-solid border border-neutral-300 p-2 bg-black cursor-pointer w-10 h-10">
+                                        ✨
+                                      </Button>
+                                    </PopoverTrigger>
+                                    <PopoverContent className="w-80 h-80 overflow-auto">
+                                      <div>
+                                        <p className="text-2xl font-bold">
+                                          Why you&apos;ll like this book:
+                                        </p>
+                                        <br />
+                                        {/* <p>
                                               {
                                                 book._additional.generate
                                                   .singleResult
                                               }
-                                            </p>
-                                          </div>
-                                        </PopoverContent>
-                                      </Popover>
-                                    )}
+                                            </p> */}
+                                      </div>
+                                    </PopoverContent>
+                                  </Popover>
+                                  {/* )} */}
                                 </div>
 
                                 <div

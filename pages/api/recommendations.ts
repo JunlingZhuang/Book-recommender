@@ -1,5 +1,6 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 import weaviate, { WeaviateClient, ApiKey } from "weaviate-ts-client";
+
 import { NearTextType } from "types";
 import { CustomHeaders } from "types";
 export default async function handler(
@@ -14,8 +15,6 @@ export default async function handler(
     console.log("userInterests is", userInterests);
     const WEAVIATE_CLUSTER_URL = process.env.WEAVIATE_CLUSTER_URL;
     const WEAVIATE_API_KEY = process.env.WEAVIATE_API_KEY;
-    const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-    const COHERE_API_KEY = process.env.COHERE_API_KEY;
 
     if (!WEAVIATE_CLUSTER_URL || !WEAVIATE_API_KEY) {
       res
@@ -24,21 +23,21 @@ export default async function handler(
       return;
     }
 
-    const headers: CustomHeaders = {
-      "X-OpenAI-Api-Key": OPENAI_API_KEY,
-      "X-Cohere-Api-Key": COHERE_API_KEY,
-    };
+    let headers: { [key: string]: string } = {};
+    if (process.env.COHERE_API_KEY) {
+      headers["X-Cohere-Api-Key"] = process.env.COHERE_API_KEY;
+    }
 
     const client: WeaviateClient = weaviate.client({
       scheme: "https",
       host: WEAVIATE_CLUSTER_URL.replace("https://", ""),
       apiKey: new ApiKey(WEAVIATE_API_KEY),
-      headers: headers as HeadersInit, // Type assertion if necessary
+      headers: headers, // Type assertion if necessary
     });
 
     let nearText: NearTextType = {
       concepts: bookPreference,
-      distance: 0.3,
+      distance: 0.6,
     };
 
     let generatePrompt =
@@ -53,12 +52,18 @@ export default async function handler(
         "title isbn10 isbn13 categories thumbnail description num_pages average_rating published_year authors"
       )
       .withNearText(nearText)
-      .withLimit(10)
+      .withLimit(20)
       .withGenerate({
         singlePrompt: generatePrompt,
       });
 
     const recData = await recDataBuilder.do();
+    if (recData.data && recData.data.Get && recData.data.Get.Book) {
+      console.log("Number of books:", recData.data.Get.Book.length);
+      recData.data.Get.Book.forEach((book, index) => {
+        console.log(`Book ${index + 1}:`, book);
+      });
+    }
 
     res.status(200).json(recData);
   } catch (err) {
