@@ -39,6 +39,7 @@ export default function Home() {
   const handleMouseLeave = (isbn) => {
     setHoverStates((prev) => ({ ...prev, [isbn]: false }));
   };
+  const [returnLimits, setReturnLimits] = useState(10);
   const [isLoading, setIsLoading] = useState(false);
   const [loadedOnce, setLoadedOnce] = useState(false);
   const [query, setQuery] = useState("");
@@ -100,6 +101,7 @@ export default function Home() {
         body: JSON.stringify({
           query,
           userInterests,
+          returnLimits,
         }),
       });
 
@@ -260,6 +262,43 @@ export default function Home() {
                   />
                 </>
               )}
+              <label
+                htmlFor="return-limits"
+                className="block text-neutral-950 font-normal mb-2 pt-4 text-center"
+              >
+                Number of results
+              </label>
+              <div className="flex items-center justify-center gap-4">
+                <Button
+                  type="button"
+                  className="bg-stone-900 text-white hover:bg-neutral-700 cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setReturnLimits(Math.max(1, returnLimits - 1));
+                  }}
+                >
+                  -
+                </Button>
+                <Input
+                  type="number"
+                  id="return-limits"
+                  min="1"
+                  max="30"
+                  value={returnLimits}
+                  onChange={(e) => setReturnLimits(parseInt(e.target.value))}
+                  className="w-20 text-center px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-400 bg-stone-900 text-neutral-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none cursor-text"
+                />
+                <Button
+                  type="button"
+                  className="bg-stone-900 text-white hover:bg-neutral-700 cursor-pointer"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setReturnLimits(Math.min(30, returnLimits + 1));
+                  }}
+                >
+                  +
+                </Button>
+              </div>
             </div>
             <Button
               className=" bg-neutral-100 text-neutral-950 border border-neutral-300 w-full rounded-md hover:border-neutral-950 hover:bg-neutral-100"
@@ -283,6 +322,11 @@ export default function Home() {
               />
               <div>
                 Searching in the vector database wihch may takes up to 30s
+                <br />
+                <span className="font-bold">
+                  Limited to 10 API calls per minute was set in this
+                  application.
+                </span>
               </div>
             </div>
           ) : (
@@ -381,14 +425,8 @@ export default function Home() {
 
       <footer className="justify-center items-center text-neutral-950	 h-20 flex flex-col">
         <div>
-          Deploy it on &nbsp;
-          <a
-            href="https://book-recommender-junling.vercel.app/"
-            className="underline text-neutral-500"
-          >
-            Vercel
-          </a>{" "}
-          and checkout the code on{" "}
+          {" "}
+          Checkout the source code on{" "}
           <a
             href="https://github.com/JunlingZhuang/Book-recommender"
             className="underline text-neutral-500"

@@ -10,6 +10,7 @@ export default async function handler(
   try {
     const bookPreference = req.body.query;
     const userInterests = req.body.userInterests;
+    const returnLimits = req.body.returnLimits;
     console.log(
       "bookPreference:",
       bookPreference,
@@ -52,7 +53,7 @@ export default async function handler(
 
     // step 1: vector search
     let searchResult = await myCollection.query.nearText(nearText.concepts, {
-      limit: 4,
+      limit: returnLimits,
       returnProperties: [
         "title",
         "isbn10",
@@ -72,10 +73,10 @@ export default async function handler(
     const generativeResult = await myCollection.generate.nearText(
       nearText.concepts,
       {
-        singlePrompt: generatePrompt, // 使用 singlePrompt 而不是 generativeSinglePrompt
+        singlePrompt: generatePrompt,
       },
       {
-        limit: 4,
+        limit: returnLimits,
       }
     );
 
