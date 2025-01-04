@@ -320,13 +320,24 @@ export default function Home() {
                 aria-label="Loading"
                 data-testid="loader"
               />
-              <div>
-                Searching in the vector database wihch may takes up to 30s
-                <br />
-                <span className="font-bold">
-                  Limited to 10 API calls per minute was set in this
-                  application.
-                </span>
+              <div className="flex flex-col items-center">
+                <div className="flex justify-center">
+                  <span className="font-normal">
+                    The Application was deploy with Vercel Serverless.
+                  </span>
+                </div>
+                <div className="flex justify-center">
+                  <span className="font-normal">
+                    The first search request in the vector database wihch may
+                    takes up to 30s
+                  </span>
+                </div>
+                <div className="flex justify-center">
+                  <span className="font-semibold">
+                    Limited to 10 API calls per minute was set in this
+                    application.
+                  </span>
+                </div>
               </div>
             </div>
           ) : (
