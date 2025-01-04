@@ -34,6 +34,7 @@ export default async function handler(
     const client = await weaviate.connectToWeaviateCloud(WEAVIATE_CLUSTER_URL, {
       authCredentials: new weaviate.ApiKey(WEAVIATE_API_KEY),
       headers: {
+        "X-Cohere-Api-Key": process.env.COHERE_API_KEY || "",
         "X-OpenAI-Api-Key": process.env.OPENAI_API_KEY || "",
       },
     });
@@ -49,8 +50,9 @@ export default async function handler(
 
     const myCollection = client.collections.get("Book");
 
-    let result = await myCollection.query.nearText(nearText.concepts, {
-      limit: 20,
+    // step 1: vector search
+    let searchResult = await myCollection.query.nearText(nearText.concepts, {
+      limit: 4,
       returnProperties: [
         "title",
         "isbn10",
@@ -66,9 +68,22 @@ export default async function handler(
       returnMetadata: ["distance"],
     });
 
-    const books = result.objects.map((item) => ({
+    // step 2: generative query
+    const generativeResult = await myCollection.generate.nearText(
+      nearText.concepts,
+      {
+        singlePrompt: generatePrompt, // 使用 singlePrompt 而不是 generativeSinglePrompt
+      },
+      {
+        limit: 4,
+      }
+    );
+
+    // merge the results
+    const books = searchResult.objects.map((item, index) => ({
       properties: item.properties,
       distance: item.metadata?.distance,
+      generatedPrompt: generativeResult.objects[index].generated,
     }));
 
     console.log("Books found:", books);

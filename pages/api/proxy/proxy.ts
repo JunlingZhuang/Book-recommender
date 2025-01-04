@@ -10,19 +10,19 @@ export default async function handler(
     return;
   }
 
-  // 解码收到的URL
+  //  decode the url
   url = decodeURIComponent(url);
 
   try {
-    // 确保使用编码后的URL进行请求
+    // ensure the url is encoded
     const encodedUrl = encodeURI(url);
     const bookResponse = await fetch(encodedUrl, {
       headers: {
-        // 如果需要的话，这里可以设置额外的头部信息
+        // set the headers if needed
       },
     });
 
-    // 检查响应的内容类型
+    // check the content type
     const contentType = bookResponse.headers.get("Content-Type") || "";
 
     const imageBuffer = await bookResponse.arrayBuffer();

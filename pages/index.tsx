@@ -114,7 +114,12 @@ export default function Home() {
 
       if (books) {
         console.log("we found books!!!!!!!!!!!!!");
-        setRecommendedBooks(books.map((book) => book.properties));
+        setRecommendedBooks(
+          books.map((book) => ({
+            ...book.properties,
+            generatedPrompt: book.generatedPrompt,
+          }))
+        );
       } else {
         console.error("Unexpected response structure:", books);
       }
@@ -127,7 +132,6 @@ export default function Home() {
   };
 
   return (
-    // <div className="min-h-screen bg-repeat bg-[url('../public/png/test_2.png')] flex flex-col justify-between bg-opacity-50 bg-blend-overlay">
     <div className="min-h-screen bg-neutral-100 flex flex-col justify-between bg-opacity-50 bg-blend-overlay">
       <Modal
         isOpen={modalIsOpen}
@@ -304,31 +308,25 @@ export default function Home() {
                                     {book.title}
                                   </h3>
 
-                                  {/* {process.env.NEXT_PUBLIC_COHERE_CONFIGURED &&
-                                    book._additional.generate.error !=
-                                      "connection to Cohere API failed with status: 429" && ( */}
-                                  <Popover>
-                                    <PopoverTrigger asChild>
-                                      <Button className="rounded-full border-solid border border-neutral-300 p-2 bg-black cursor-pointer w-10 h-10">
-                                        ✨
-                                      </Button>
-                                    </PopoverTrigger>
-                                    <PopoverContent className="w-80 h-80 overflow-auto">
-                                      <div>
-                                        <p className="text-2xl font-bold">
-                                          Why you&apos;ll like this book:
-                                        </p>
-                                        <br />
-                                        {/* <p>
-                                              {
-                                                book._additional.generate
-                                                  .singleResult
-                                              }
-                                            </p> */}
-                                      </div>
-                                    </PopoverContent>
-                                  </Popover>
-                                  {/* )} */}
+                                  {process.env.NEXT_PUBLIC_COHERE_CONFIGURED &&
+                                    book.generatedPrompt && (
+                                      <Popover>
+                                        <PopoverTrigger asChild>
+                                          <Button className="rounded-full border-solid border border-neutral-300 p-2 bg-black cursor-pointer w-10 h-10">
+                                            ✨
+                                          </Button>
+                                        </PopoverTrigger>
+                                        <PopoverContent className="w-80 h-80 overflow-auto">
+                                          <div>
+                                            <p className="text-xl font-bold">
+                                              Why you may like this book:
+                                            </p>
+                                            <p>{book.generatedPrompt}</p>
+                                            <br />
+                                          </div>
+                                        </PopoverContent>
+                                      </Popover>
+                                    )}
                                 </div>
 
                                 <div
@@ -404,6 +402,7 @@ export default function Home() {
           <a
             href="https://junlings-superb-site111.webflow.io/"
             target="_blank"
+            rel="noopener noreferrer"
             className="underline text-neutral-500"
           >
             @Junling Zhuang
@@ -412,6 +411,7 @@ export default function Home() {
           <a
             target="_blank"
             href="https://weaviate.io/"
+            rel="noopener noreferrer"
             className="underline text-neutral-500"
           >
             Weaviate

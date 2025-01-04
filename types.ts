@@ -12,6 +12,7 @@ export interface Book {
   num_pages: string;
   ratings_count: string;
   _additional: AdditionalType;
+  generatedPrompt: string;
 }
 
 export interface NearTextType {
