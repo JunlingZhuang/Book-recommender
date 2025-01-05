@@ -211,7 +211,7 @@ export default function Home() {
       <div className="mb-auto py-10 px-4 ">
         <div className="container mx-auto">
           <h1 className="text-3xl text-neutral-950 font-bold font-sans mb-6 text-center">
-            Book Recommendations
+            BookBuddy
           </h1>
           <h2 className="text-2xl text-neutral-950 font-normal text-center">
             <span ref={el}></span>
