@@ -39,7 +39,7 @@ export default function Home() {
   const handleMouseLeave = (isbn) => {
     setHoverStates((prev) => ({ ...prev, [isbn]: false }));
   };
-  const [returnLimits, setReturnLimits] = useState(10);
+  const [returnLimits, setReturnLimits] = useState(3);
   const [isLoading, setIsLoading] = useState(false);
   const [loadedOnce, setLoadedOnce] = useState(false);
   const [query, setQuery] = useState("");
@@ -283,7 +283,7 @@ export default function Home() {
                   type="number"
                   id="return-limits"
                   min="1"
-                  max="30"
+                  max="9"
                   value={returnLimits}
                   onChange={(e) => setReturnLimits(parseInt(e.target.value))}
                   className="w-20 text-center px-4 py-2 border border-white rounded-lg shadow-md shadow-neutral-400 bg-stone-900 text-neutral-300 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none cursor-text"
